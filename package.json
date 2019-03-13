@@ -1,0 +1,41 @@
+{
+  "name": "koa2",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon start.js",
+    "dev": "./node_modules/.bin/nodemon bin/www",
+    "prd": "pm2 start bin/www",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "babel-preset-env": "^1.4.0",
+    "babel-register": "^6.26.0",
+    "debug": "^2.6.3",
+    "bluebird": "^3.5.0",
+    "cloudinary": "^1.8.0",
+    "koa": "^2.2.0",
+    "koa-bodyparser": "^3.2.0",
+    "koa-convert": "^1.2.0",
+    "koa-json": "^2.0.2",
+    "koa-logger": "^2.0.1",
+    "koa-onerror": "^1.2.1",
+    "koa-router": "^7.1.1",
+    "koa-session": "^5.0.0",
+    "koa-static": "^3.0.0",
+    "koa-views": "^5.2.1",
+    "koa2-cors": "^2.0.6",
+    "lodash": "^4.17.4",
+    "mongoose": "^5.4.17",
+    "pug": "^2.0.0-rc.1",
+    "qiniu": "^6.1.13",
+    "sha1": "^1.1.1",
+    "speakeasy": "^2.0.0",
+    "uuid": "^3.0.1",
+    "xss": "^0.3.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
