@@ -49,18 +49,19 @@ const Koa = require('koa')
 const logger = require('koa-logger')
 const session = require('koa-session')
 const bodyParser = require('koa-bodyparser')
+const cors = require('koa2-cors');
 const app = new Koa()
 app.use(cors({
   origin: function(ctx) {
     if (ctx.url === '/test') {
       return false;
     }
-    return '*';
+    return ['http://39.98.51.33:8000'];
   },
   exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
   maxAge: 5,
   credentials: true,
-  allowMethods: ['GET', 'POST', 'DELETE'],
+  allowMethods: ['GET', 'POST', 'DELETE', 'OPTIONS'],
   allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
 }));
 app.keys = ['weiwei']
