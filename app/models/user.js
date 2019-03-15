@@ -23,6 +23,7 @@ var UserSchema = new Schema({
   },
   accessToken: String,
   mail: String,
+  name: String,
   password: String,
   gender: String,
   breed: String,

@@ -13,7 +13,6 @@ import userHelper from '../dbhelper/userHelper'
  * @yield {[type]}   [description]
  */
 exports.signup = async (ctx, next) => {
-  console.log('ssssss',ctx.request.body)
 	var phoneNumber = xss(ctx.request.body.phoneNumber.trim())
 	var user = await User.findOne({
 	  phoneNumber: phoneNumber
@@ -21,7 +20,6 @@ exports.signup = async (ctx, next) => {
   console.log(user)
 	
 	var verifyCode = Math.floor(Math.random()*10000+1)
-  console.log(phoneNumber)
 	if (!user) {
 	  var accessToken = uuid.v4()
 
@@ -61,7 +59,6 @@ exports.signup = async (ctx, next) => {
  * @yield {[type]}   [description]
  */
 exports.login = async (ctx, next) => {
-  console.log('ssssss',ctx.request.body)
 	var phoneNumber = ctx.request.body.userName
 	var user = await User.findOne({
 	  phoneNumber: phoneNumber
@@ -108,13 +105,9 @@ exports.login = async (ctx, next) => {
  * @yield {[type]}   [description]
  */
 exports.current = async (ctx, next) => {
-  console.log('ssssss',ctx.request.headers)
-  // var phoneNumber = ctx.request.body.userName
-  // console.log('ssss', )
 	var user = await User.findOne({
 	  accessToken: ctx.request.headers.authorization
 	}).exec()
-	console.log('user', user);
 	if (!user) {
 	  ctx.body = {
       success: false,
@@ -138,8 +131,10 @@ exports.current = async (ctx, next) => {
  */
 exports.update = async (ctx, next) => {
   var body = ctx.request.body
-  var user = ctx.session.user
-  var fields = 'avatar,gender,age,mail,breed'.split(',')
+  var user = await User.findOne({
+	  accessToken: ctx.request.headers.authorization
+	}).exec()
+  var fields = 'name,mail,phoneNumber,avatar'.split(',')
 
   fields.forEach(function(field) {
     if (body[field]) {
@@ -153,6 +148,7 @@ exports.update = async (ctx, next) => {
     success: true,
     data: {
       mail: user.mail,
+      name: user.name,
       accessToken: user.accessToken,
       avatar: user.avatar,
       age: user.age,

@@ -28,7 +28,7 @@ exports.hasToken = async (ctx, next) => {
   var accessToken = ctx.query.Authorization
   console.log('sss', ctx)
   if (!accessToken) {
-    accessToken = ctx.request.body.accessToken
+    accessToken = ctx.request.headers.authorization
   }
 
   if (!accessToken) {
