@@ -50,7 +50,19 @@ const logger = require('koa-logger')
 const session = require('koa-session')
 const bodyParser = require('koa-bodyparser')
 const app = new Koa()
-
+app.use(cors({
+  origin: function(ctx) {
+    if (ctx.url === '/test') {
+      return false;
+    }
+    return '*';
+  },
+  exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
+  maxAge: 5,
+  credentials: true,
+  allowMethods: ['GET', 'POST', 'DELETE'],
+  allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
+}));
 app.keys = ['weiwei']
 app.use(logger())
 app.use(session(app))
