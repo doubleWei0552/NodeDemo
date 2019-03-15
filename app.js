@@ -50,7 +50,7 @@ const logger = require('koa-logger')
 const session = require('koa-session')
 const bodyParser = require('koa-bodyparser')
 const cors = require('koa2-cors');
-const app = new Koa()
+const app = new Koa();
 app.use(cors({
   origin: function(ctx) {
     if (ctx.url === '/test') {
