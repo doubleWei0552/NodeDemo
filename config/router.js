@@ -14,6 +14,7 @@ module.exports = function(){
   router.post('/u/login', App.hasBody, User.login)
   router.get('/u/current', User.current)
   router.post('/u/updataCurrent', App.hasBody, App.hasToken, User.update)
+  router.get('/u/allusers', App.hasToken, User.getAlllUsers)
 
   // DB Interface test
   router.get('/test/user/users',User.users)

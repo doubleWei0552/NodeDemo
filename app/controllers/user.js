@@ -24,6 +24,7 @@ exports.signup = async (ctx, next) => {
 	  var accessToken = uuid.v4()
 
 	  user = new User({
+      name: ctx.request.body.name,
       mail: ctx.request.body.mail,
       password: ctx.request.body.password,
 	    avatar: 'http://upload-images.jianshu.io/upload_images/5307186-eda1b28e54a4d48e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240',
@@ -59,10 +60,13 @@ exports.signup = async (ctx, next) => {
  * @yield {[type]}   [description]
  */
 exports.login = async (ctx, next) => {
-	var phoneNumber = ctx.request.body.userName
-	var user = await User.findOne({
-	  phoneNumber: phoneNumber
-	}).exec()
+	var userName = ctx.request.body.userName
+	var user = await User.findOne(
+    {
+	    $or: [{ mail: userName}, {phoneNumber: userName}]
+    },
+  ).exec()
+  console.log('user', user)
   var accessToken = uuid.v4()
 	if (!user) {
 	  ctx.body = {
@@ -157,6 +161,26 @@ exports.update = async (ctx, next) => {
       _id: user._id
     }
   }
+}
+exports.getAlllUsers = async (ctx, next) => {
+  var body = ctx.request.query || {};
+  var pageIndex = body.pageIndex * 1;
+  var pageSize = body.pageSize * 1;
+  var total = await User.find().count();
+  var users = await User.find().limit(pageSize).skip((pageIndex - 1) * pageSize);
+
+  ctx.body = {
+    success: true,
+    data: {
+      list: users,
+      pagination: {
+        pageIndex,
+        pageSize,
+        total: total,
+      }
+    }
+  }
+  
 }
 
 
