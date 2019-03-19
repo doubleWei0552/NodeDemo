@@ -3,6 +3,7 @@
 const Router = require('koa-router')
 const User = require('../app/controllers/user')
 const App = require('../app/controllers/app')
+const Service = require('../app/services/service')
 
 module.exports = function(){
 	var router = new Router({
@@ -15,6 +16,9 @@ module.exports = function(){
   router.get('/u/current', User.current)
   router.post('/u/updataCurrent', App.hasBody, App.hasToken, User.update)
   router.get('/u/allusers', App.hasToken, User.getAlllUsers)
+
+  // 七牛云
+  router.get('/qiniu/signature',App.hasToken, Service.getUploadToken)
 
   // DB Interface test
   router.get('/test/user/users',User.users)
