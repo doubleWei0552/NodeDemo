@@ -4,8 +4,14 @@ var xss = require('xss')
 var mongoose =  require('mongoose')
 var User = mongoose.model('User')
 var uuid = require('uuid')
+var fs = require('fs')
+var koaBody = require('koa-body')
+var path = require('path')
+
 // var userHelper = require('../dbhelper/userHelper')
 import userHelper from '../dbhelper/userHelper'
+import { resolve } from 'path';
+import { rejects } from 'assert';
 
 /**
  * 注册新用户
@@ -182,7 +188,59 @@ exports.getAlllUsers = async (ctx, next) => {
   }
   
 }
+// UploadAvatar
+exports.UploadAvatar = async (ctx, next) => {
+  console.log('ctx.request',ctx.request)
+  var user = await User.findOne({
+	  accessToken: ctx.request.headers.authorization
+	}).exec()
+  const file = ctx.request.files.file;
+  const reader=fs.createReadStream(file.path);
+  let filePath=__dirname+"/static/upload";
+  let fileResource=filePath+`/${file.name}`;
+  user.avatar = filePath+`/${file.name}`;
+  user = await user.save();
+  if(!fs.existsSync(filePath)){  //判断staic/upload文件夹是否存在，如果不存在就新建一个
 
+    fs.mkdir(filePath,(err)=>{
+    
+    if(err){
+    
+    throw new Error(err)
+    
+    }else{
+    
+    let upstream=fs.createWriteStream(fileResource);
+    
+    reader.pipe(upstream);
+    
+    ctx.response.body={
+      success: true,
+      data: {
+        url:filePath+`/${file.name}`
+      }
+    }
+    
+    }
+    
+    })
+    
+    }else{
+    
+    let upstream=fs.createWriteStream(fileResource)
+    
+    reader.pipe(upstream);
+    
+    ctx.response.body={
+      success: true,
+      data: {
+        url:filePath+`/${file.name}`
+      }
+    }
+    
+    }
+  
+}
 
 
 /**

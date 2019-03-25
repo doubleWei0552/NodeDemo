@@ -7,11 +7,12 @@ exports.getUploadToken = async (ctx, next) => {
   var accessKey = 'kWOr3q0RHUvGEtDiDr2ImvKEgYRhC6YWi4dABtns';
   var secretKey = '7QqDyUsp_OmE35_Br0an62s7JSpoWbU9oeuJR2Dm';
   var mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
-
+  
   var options = {
-    scope: bucket,
+    scope: 'pojwhifoa.bkt.clouddn.com',
   };
   var putPolicy = new qiniu.rs.PutPolicy(options);
+  console.log('qiniu')
   var uploadToken = putPolicy.uploadToken(mac);
 
   ctx.body = {

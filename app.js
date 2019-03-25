@@ -2,6 +2,8 @@
 
 const fs = require('fs')
 const path = require('path')
+const serve = require('koa-static')
+const koaBody = require('koa-body')
 const mongoose = require('mongoose')
 
 const db = 'mongodb://localhost/test'
@@ -68,6 +70,19 @@ app.keys = ['weiwei']
 app.use(logger())
 app.use(session(app))
 app.use(bodyParser())
+app.use(koaBody({
+
+  multipart:true,
+  
+  formidable:{
+  
+      maxFieldsSize:10*1024*1024,
+  
+      multipart:true
+  
+  }
+  
+  }))
 
 
 /**
@@ -77,6 +92,7 @@ app.use(bodyParser())
 const router = require('./config/router')()
 
 app
+  .use(serve(__dirname + '/static')) // files文件夹用于保存上传的文件,也是静态资源地址
   .use(router.routes())
   .use(router.allowedMethods());
 
