@@ -80,7 +80,36 @@ app
   .use(router.routes())
   .use(router.allowedMethods());
 
+/**
+ * swagger API文档
+ */
+  const views = require('koa-render')
+  , serve = require('koa-static')
+  , swagger =  require('./lib/swagger-koa')
+  // , api = require('./example/api')
 
+const  port = 9000;
+   
 
-app.listen(9000)
-console.log('app started at port 9000');
+app.use(views('./example/views', { default: 'jade' }));
+
+app.use(swagger.init({
+  apiVersion: '1.0',
+  swaggerVersion: '1.0',
+  basePath: 'http://localhost:' + port,
+  swaggerURL: '/swagger',
+  swaggerJSON: '/api-docs.json',
+  swaggerUI: './example/public/swagger/',
+  apis: ['./example/api.js', './example/api.yml', './example/api.coffee']
+}));
+
+app.use(serve(path.join(__dirname, '..example/public')));
+
+// app.use(router.get('/', async (ctx, next) => {
+//   ctx.body = await ctx.render('index', { title: 'Koa' });
+// }));
+
+// app.use(router.post('/login', api.login));
+
+app.listen(port)
+console.log('app started at port ' + port);
