@@ -103,7 +103,7 @@ app.use(swagger.init({
   apis: ['./example/api.js', './example/api.yml', './example/api.coffee']
 }));
 
-app.use(serve(path.join(__dirname, '..example/public')));
+app.use(serve(path.join(__dirname, './example/public')));
 
 // app.use(router.get('/', async (ctx, next) => {
 //   ctx.body = await ctx.render('index', { title: 'Koa' });
