@@ -13,6 +13,7 @@
     "babel-preset-env": "^1.4.0",
     "babel-register": "^6.26.0",
     "bluebird": "^3.5.0",
+    "busboy": "^0.3.0",
     "cloudinary": "^1.8.0",
     "debug": "^2.6.3",
     "koa": "^2.2.0",
