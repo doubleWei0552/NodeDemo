@@ -58,7 +58,7 @@ app.use(cors({
     if (ctx.url === '/test') {
       return false;
     }
-    return ['http://39.98.51.33:8000'];
+    return 'http://localhost:8000';
   },
   exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
   maxAge: 5,
@@ -92,7 +92,6 @@ app.use(koaBody({
 const router = require('./config/router')()
 
 app
-  .use(serve(__dirname + '/static')) // files文件夹用于保存上传的文件,也是静态资源地址
   .use(router.routes())
   .use(router.allowedMethods());
 

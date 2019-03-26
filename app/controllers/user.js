@@ -191,15 +191,15 @@ exports.getAlllUsers = async (ctx, next) => {
 // UploadAvatar
 exports.UploadAvatar = async (ctx, next) => {
   console.log('ctx.request',ctx.request)
-  var user = await User.findOne({
-	  accessToken: ctx.request.headers.authorization
-	}).exec()
+  // var user = await User.findOne({
+	//   accessToken: ctx.request.headers.authorization
+	// }).exec()
   const file = ctx.request.files.file;
   const reader=fs.createReadStream(file.path);
   let filePath=__dirname+"/static/upload";
   let fileResource=filePath+`/${file.name}`;
-  user.avatar = filePath+`/${file.name}`;
-  user = await user.save();
+  // user.avatar = filePath+`/${file.name}`;
+  // user = await user.save();
   if(!fs.existsSync(filePath)){  //判断staic/upload文件夹是否存在，如果不存在就新建一个
 
     fs.mkdir(filePath,(err)=>{
