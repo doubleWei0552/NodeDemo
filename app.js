@@ -3,7 +3,6 @@
 const fs = require('fs')
 const path = require('path')
 const serve = require('koa-static')
-const koaBody = require('koa-body')
 const mongoose = require('mongoose')
 
 const db = 'mongodb://localhost/test'
@@ -52,24 +51,22 @@ const logger = require('koa-logger')
 const session = require('koa-session')
 const bodyParser = require('koa-bodyparser')
 const cors = require('koa2-cors');
+const koaBody = require('koa-body')
 const app = new Koa();
+app.use(serve(__dirname + '/NodeDemo/'));
 app.use(cors({
   origin: function(ctx) {
     if (ctx.url === '/test') {
       return false;
     }
-    return 'http://localhost:8000';
+    return 'http://localhost:8001' || 'http://localhost:8000' || 'http://127.0.0.1:8001';
   },
   exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
   maxAge: 5,
   credentials: true,
   allowMethods: ['GET', 'POST', 'DELETE', 'OPTIONS'],
-  allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
+  allowHeaders: ['Content-Type', 'Authorization', 'Accept', 'x-requested-with'],
 }));
-app.keys = ['weiwei']
-app.use(logger())
-app.use(session(app))
-app.use(bodyParser())
 app.use(koaBody({
 
   multipart:true,
@@ -83,6 +80,11 @@ app.use(koaBody({
   }
   
   }))
+app.keys = ['weiwei']
+app.use(logger())
+app.use(session(app))
+app.use(bodyParser())
+
 
 
 /**
