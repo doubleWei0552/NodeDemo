@@ -196,7 +196,8 @@ exports.UploadAvatar = async (ctx, next) => {
 	// }).exec()
   const file = ctx.request.files.file;
   const reader=fs.createReadStream(file.path);
-  let filePath=__dirname+"/static/upload";
+  var filePath = path.join(__dirname, '../../', '/public/avatars')
+  // let filePath=__dirname+"/static/upload";
   let fileResource=filePath+`/${file.name}`;
   // user.avatar = filePath+`/${file.name}`;
   // user = await user.save();
@@ -217,7 +218,7 @@ exports.UploadAvatar = async (ctx, next) => {
     ctx.response.body={
       success: true,
       data: {
-        url:filePath+`/${file.name}`
+        url:`/avatars/${file.name}`
       }
     }
     
@@ -234,7 +235,7 @@ exports.UploadAvatar = async (ctx, next) => {
     ctx.response.body={
       success: true,
       data: {
-        url:filePath+`/${file.name}`
+        url:`/avatars/${file.name}`
       }
     }
     

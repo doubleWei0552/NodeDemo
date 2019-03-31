@@ -53,7 +53,8 @@ const bodyParser = require('koa-bodyparser')
 const cors = require('koa2-cors');
 const koaBody = require('koa-body')
 const app = new Koa();
-app.use(serve(__dirname + '/NodeDemo/'));
+
+app.use(serve(__dirname + '/public'));
 app.use(cors({
   origin: function(ctx) {
     if (ctx.url === '/test') {
@@ -85,7 +86,11 @@ app.use(logger())
 app.use(session(app))
 app.use(bodyParser())
 
-
+// app.use(async (ctx, next) => {
+  
+//   console.log('sss', ctx.url);
+//   await next();
+// });
 
 /**
  * 使用路由转发请求
