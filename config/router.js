@@ -16,7 +16,7 @@ module.exports = function(){
   router.get('/u/current', User.current)
   router.post('/u/updataCurrent', App.hasBody, App.hasToken, User.update)
   router.get('/u/allusers', App.hasToken, User.getAlllUsers)
-  router.post('/u/uploadavatar', App.hasToken, User.UploadAvatar)
+  router.post('/u/uploadavatar', User.UploadAvatar)
 
   // 七牛云
   router.post('/qiniu/signature', Service.getUploadToken)

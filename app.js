@@ -59,7 +59,7 @@ app.use(cors({
     if (ctx.url === '/test') {
       return false;
     }
-    return 'http://localhost:8001' || 'http://localhost:8000' || 'http://127.0.0.1:8001';
+    return '*';
   },
   exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
   maxAge: 5,
