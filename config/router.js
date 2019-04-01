@@ -2,6 +2,7 @@
 
 const Router = require('koa-router')
 const User = require('../app/controllers/user')
+const Article = require('../app/controllers/article')
 const App = require('../app/controllers/app')
 const Service = require('../app/services/service')
 
@@ -17,6 +18,9 @@ module.exports = function(){
   router.post('/u/updataCurrent', App.hasBody, App.hasToken, User.update)
   router.get('/u/allusers', App.hasToken, User.getAlllUsers)
   router.post('/u/uploadavatar', User.UploadAvatar)
+
+  // article
+  router.post('/article/createarticle', App.hasBody, App.hasToken, Article.createArticle)
 
   // 七牛云
   router.post('/qiniu/signature', Service.getUploadToken)

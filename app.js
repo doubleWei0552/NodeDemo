@@ -49,7 +49,8 @@ require('babel-register')
 const Koa = require('koa')
 const logger = require('koa-logger')
 const session = require('koa-session')
-const bodyParser = require('koa-bodyparser')
+const convert = require('koa-convert');
+var bodyParser = require('koa-bodyparser');
 const cors = require('koa2-cors');
 const koaBody = require('koa-body')
 const app = new Koa();
@@ -69,7 +70,11 @@ app.use(cors({
   allowHeaders: ['Content-Type', 'Authorization', 'Accept', 'x-requested-with'],
 }));
 app.use(koaBody({
-
+  
+    formLimit:"50mb",
+    jsonLimit:"50mb",
+    textLimit:"50mb",
+  
   multipart:true,
   
   formidable:{
